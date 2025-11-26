@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore; 
 using System;
+using RestaurantManagementSystem.Models;
+
 namespace RestaurantManagementSystem.Data
 {
     public class RestaurantMSDbContext : DbContext
@@ -8,6 +10,8 @@ namespace RestaurantManagementSystem.Data
         {
         }
 
+        public DbSet<User>Users { get; set; }
+        public DbSet<PasswordToken> PasswordTokens { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             

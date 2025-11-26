@@ -1,0 +1,30 @@
+﻿using RestaurantManagementSystem.Data;
+using RestaurantManagementSystem.Models;
+
+namespace RestaurantManagementSystem.Repositories
+{
+    public class TokenRepository : ITokenRepository
+    {
+        private readonly RestaurantMSDbContext _context;
+        public TokenRepository (RestaurantMSDbContext context)
+        {
+            _context = context;
+        }
+        public async Task AddPasswordToken(PasswordToken token)
+        {
+            _context.PasswordTokens.Add(token);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<PasswordToken> GetPasswordToken(string tokenValue)
+        {
+            return _context.PasswordTokens.FirstOrDefault(t => t.TokenValue == tokenValue);
+        }
+
+        public async Task DeletePasswordToken(PasswordToken token)
+        {
+            _context.PasswordTokens.Remove(token);
+            await _context.SaveChangesAsync();
+        }
+    }
+}
