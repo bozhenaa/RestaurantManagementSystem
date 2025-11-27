@@ -1,4 +1,5 @@
-﻿using RestaurantManagementSystem.Models;
+﻿using RestaurantManagementSystem.DTOs;
+using RestaurantManagementSystem.Models;
 
 namespace RestaurantManagementSystem.Services
 {
@@ -8,7 +9,7 @@ namespace RestaurantManagementSystem.Services
         Task<User> GetUserByEmail (string email);
 
         Task CreateUser(User user);
-        Task DeleteUser(User user);
-        Task UpdateUser(User user);
+        Task DeleteUser(int userId);
+        Task UpdateUser(UpdateUserInfoDto user);
     }
 }

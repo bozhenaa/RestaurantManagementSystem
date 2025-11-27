@@ -18,7 +18,7 @@
         "JWT_SECRET": "some_string_used_for_key_secret_words_for_developing"
       }
     },
-    "MoviesAPI": {
+    "RestaurantManagementSystemAPI": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

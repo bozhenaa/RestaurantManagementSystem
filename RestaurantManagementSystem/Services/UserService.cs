@@ -32,7 +32,7 @@ namespace RestaurantManagementSystem.Services
 
             await _userRepository.AddUser(user); 
         }
-        public async Task UpdateUser(User user)
+        public async Task UpdateUser(UpdateUserInfoDto user)
         {
             if (user == null)
             {
@@ -43,15 +43,12 @@ namespace RestaurantManagementSystem.Services
             {
                 throw new InvalidOperationException("User does not exists.");
             }
-            await _userRepository.UpdateUser(user);
+            await _userRepository.UpdateUser(existingUser);
         }
 
-        public async Task DeleteUser(User user)
+        public async Task DeleteUser(int userId)
         {
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user), "User object cannot be null");
-            }
+            var user = await _userRepository.GetUserById(userId);
 
             var existingUser = await _userRepository.GetUserByEmail(user.Email);
             if (existingUser == null)

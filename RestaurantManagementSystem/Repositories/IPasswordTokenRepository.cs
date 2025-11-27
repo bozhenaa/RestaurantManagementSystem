@@ -2,7 +2,7 @@
 
 namespace RestaurantManagementSystem.Repositories
 {
-    public interface ITokenRepository
+    public interface IPasswordTokenRepository
     {
         Task<PasswordToken> GetPasswordToken (string tokenValue);
         Task AddPasswordToken(PasswordToken passwordToken);

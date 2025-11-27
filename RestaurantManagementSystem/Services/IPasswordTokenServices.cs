@@ -2,7 +2,7 @@
 
 namespace RestaurantManagementSystem.Services
 {
-    public interface ITokenServices
+    public interface IPasswordTokenServices
     {
         Task<string> GeneratePasswordToken(string email);
         Task<string> GeneratePasswordLink(string email);

@@ -3,10 +3,10 @@ using RestaurantManagementSystem.Models;
 
 namespace RestaurantManagementSystem.Repositories
 {
-    public class TokenRepository : ITokenRepository
+    public class PasswordTokenRepository : IPasswordTokenRepository
     {
         private readonly RestaurantMSDbContext _context;
-        public TokenRepository (RestaurantMSDbContext context)
+        public PasswordTokenRepository (RestaurantMSDbContext context)
         {
             _context = context;
         }

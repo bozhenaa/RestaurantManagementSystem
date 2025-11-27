@@ -7,6 +7,7 @@ namespace RestaurantManagementSystem.Repositories
         Task<User> GetUserByUsername(string username);
         Task<User> GetUserByEmail(string email);
         Task<User> GetUserByUsernameOrEmail(string usernameOrEmail);
+        Task<User> GetUserById(int userId);
 
         Task AddUser(User user);
         Task UpdateUser(User user);

@@ -2,13 +2,13 @@
 using RestaurantManagementSystem.Models;
 namespace RestaurantManagementSystem.Services
 {
-    public class TokenServices :ITokenServices
+    public class PasswordTokenServices :IPasswordTokenServices
     {
-        public ITokenRepository _tokenRepository;
+        public IPasswordTokenRepository _tokenRepository;
         public IUserRepository _userRepository;
         public IConfiguration _configuration;
 
-        public TokenServices(ITokenRepository tokenRepository, IUserRepository userRepository, IConfiguration configuration)
+        public PasswordTokenServices(IPasswordTokenRepository tokenRepository, IUserRepository userRepository, IConfiguration configuration)
         {
             _tokenRepository = tokenRepository;
             _userRepository = userRepository;

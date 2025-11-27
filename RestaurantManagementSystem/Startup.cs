@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RestaurantManagementSystem.Data;
+using RestaurantManagementSystem.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,11 +19,11 @@ using System.Text;
 namespace RestaurantManagementSystem
 {
     public class Startup
-    {   
-        public IConfiguration Configuration { get; set; }
+    {
+        private readonly IConfiguration _configuration;
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
 
@@ -30,9 +31,9 @@ namespace RestaurantManagementSystem
         {
             services.AddControllers();
 
-            var conn = Configuration.GetConnectionString("DefaultConnection");
+            var conn = _configuration.GetConnectionString("DefaultConnection");
 
-            var secret = Environment.GetEnvironmentVariable("JWT_SECRET_KEY") ?? "temporary_key_for_testing";
+            var secret = Environment.GetEnvironmentVariable("JWT_SECRET") ?? "temporary_key_for_testing";
             var key = System.Text.Encoding.ASCII.GetBytes(secret);
 
             services.AddSwaggerGen(c =>
@@ -99,7 +100,12 @@ namespace RestaurantManagementSystem
            
             services.AddDbContext<RestaurantMSDbContext>(options =>
                 options.UseSqlServer(conn));
-            
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPasswordTokenRepository, PasswordTokenRepository>();
+
+
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

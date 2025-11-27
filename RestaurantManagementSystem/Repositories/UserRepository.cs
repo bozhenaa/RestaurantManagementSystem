@@ -27,6 +27,11 @@ namespace RestaurantManagementSystem.Repositories
             return await _context.Users.FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail);
         }
 
+        public async Task<User> GetUserById(int id)
+        {
+            return await _context.Users.FindAsync(id);
+        }
+
         public async Task AddUser(User user)
         {
             _context.Users.Add(user);
@@ -45,6 +50,7 @@ namespace RestaurantManagementSystem.Repositories
             await _context.SaveChangesAsync();
         }
         
+       
       
     }
 }
