@@ -28,7 +28,7 @@ namespace RestaurantManagementSystem.Services
             {
                 throw new InvalidOperationException("User with the same email already exists.");
             }
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            user.HashedPassword = BCrypt.Net.BCrypt.HashPassword(user.HashedPassword);
 
             await _userRepository.AddUser(user); 
         }
@@ -43,6 +43,10 @@ namespace RestaurantManagementSystem.Services
             {
                 throw new InvalidOperationException("User does not exists.");
             }
+            existingUser.Name = user.Name;
+            existingUser.Username = user.Name;
+            existingUser.Email = user.Email;
+            existingUser.Phone = user.Phone;
             await _userRepository.UpdateUser(existingUser);
         }
 

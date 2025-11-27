@@ -121,7 +121,31 @@ namespace RestaurantManagementSystem.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
-
         }
+
+        [HttpGet]
+        [Route("Admin")]
+        [Authorize(Roles = "admin")]
+        public ActionResult<string> AdminProfile()
+        {
+            return Ok("Welcome, admin!");
+        }
+
+        [HttpGet]
+        [Route("Client")]
+        [Authorize(Roles = "client")]
+        public ActionResult<string> ClientProfile()
+        {
+            return Ok("Welcome, client!");
+        }
+
+        [HttpGet]
+        [Route("All")]
+        [Authorize(Roles = "admin, client")]
+        public ActionResult<string> AllProfile()
+        {
+            return Ok("Welcome, Client or Admin!");
+        }
+
     }
 }
