@@ -35,7 +35,7 @@ namespace RestaurantManagementSystem.Repositories
         public async Task AddTable(RestaurantTable table)
         {
             _context.RestaurantTables.Add(table);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteTable(RestaurantTable table)

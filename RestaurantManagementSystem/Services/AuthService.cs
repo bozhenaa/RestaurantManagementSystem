@@ -45,7 +45,7 @@ namespace RestaurantManagementSystem.Services
         }
         public async Task RegisterUser(RegisterUserDto request)
         {
-            if (_userRepository.GetUserByEmail(request.Email) != null || _userRepository.GetUserByUsername(request.Username) != null)
+            if (await _userRepository.GetUserByEmail(request.Email) != null || await _userRepository.GetUserByUsername(request.Username) != null)
             {
                 throw new Exception("User with this email already exists");
             }

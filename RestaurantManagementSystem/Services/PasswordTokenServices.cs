@@ -2,7 +2,7 @@
 using RestaurantManagementSystem.Models;
 namespace RestaurantManagementSystem.Services
 {
-    public class PasswordTokenServices :IPasswordTokenServices
+    public class PasswordTokenServices :IPasswordTokenService
     {
         public IPasswordTokenRepository _tokenRepository;
         public IUserRepository _userRepository;

@@ -28,7 +28,7 @@ namespace RestaurantManagementSystem.Services
             {
                 throw new InvalidOperationException("User with the same email already exists.");
             }
-            await _userRepository.AddUser(user); 
+            await _userRepository.AddUser(user);
         }
         public async Task UpdateUser(UpdateUserInfoDto user)
         {
@@ -40,6 +40,22 @@ namespace RestaurantManagementSystem.Services
             if (existingUser == null)
             {
                 throw new InvalidOperationException("User does not exists.");
+            }
+            if (existingUser.Email != user.Email)
+            {
+                var checkEmail = await _userRepository.GetUserByEmail(user.Email);
+                if (checkEmail != null)
+                {
+                    throw new InvalidOperationException("Email is already taken.");
+                }
+            }
+            if (existingUser.Username != user.Username)
+            {
+                var checkUsername = await _userRepository.GetUserByUsername(user.Username);
+                if (checkUsername != null)
+                {
+                    throw new InvalidOperationException("Username is already taken.");
+                }
             }
             existingUser.Name = user.Name;
             existingUser.Username = user.Username;

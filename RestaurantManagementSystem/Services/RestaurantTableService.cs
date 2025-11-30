@@ -4,6 +4,8 @@ using RestaurantManagementSystem.Models;
 using RestaurantManagementSystem.Repositories;
 
 namespace RestaurantManagementSystem.Services
+
+
 {
     public class RestaurantTableService : IRestaurantTableService
     {
@@ -77,13 +79,9 @@ namespace RestaurantManagementSystem.Services
             return existingTable;
         }
 
-        public async Task<IEnumerable<RestaurantTable>> GetTableByRoomName(RoomName roomName)
+        public async Task<IEnumerable<RestaurantTable>> GetTablesByRoom(RoomName roomName)
         {
             var existingTables = await _restaurantTablerepository.GetTablesByRoom(roomName);
-            if (existingTables == null)
-            {
-                throw new ArgumentNullException();
-            }
             return existingTables;
         }
 

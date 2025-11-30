@@ -30,7 +30,7 @@ namespace RestaurantManagementSystem.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 

@@ -4,6 +4,7 @@
     {
         none = 0,
         admin = 1,
-        client = 2
+        employee = 2,
+        client =3
     }
 }
