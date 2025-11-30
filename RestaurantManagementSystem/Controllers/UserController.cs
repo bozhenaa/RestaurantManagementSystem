@@ -43,6 +43,7 @@ namespace RestaurantManagementSystem.Controllers
             return Ok(user);
         }
 
+
         [HttpPost("register-user")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto request)
         {
