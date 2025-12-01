@@ -3,7 +3,7 @@ using RestaurantManagementSystem.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Authorization;
-using RestaurantManagementSystem.Models;
+using RestaurantManagementSystem.Data;
 using RestaurantManagementSystem.DTOs;
 using RestaurantManagementSystem.Enums;
 
@@ -107,7 +107,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpPost("add-table")]
-        public async Task<IActionResult> AddTable([FromBody] AddRestaurantTableDto table)
+        public async Task<IActionResult> AddTable([FromBody] AddRestaurantTableModel table)
         {
             try
             {
@@ -125,7 +125,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpPut("update-table")]
-        public async Task<IActionResult> UpdateTable([FromBody] AddRestaurantTableDto table)
+        public async Task<IActionResult> UpdateTable([FromBody] AddRestaurantTableModel table)
         {
             try
             {

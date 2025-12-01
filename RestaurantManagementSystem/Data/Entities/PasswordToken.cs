@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RestaurantManagementSystem.Models
+namespace RestaurantManagementSystem.Data.Entities
 {
     public class PasswordToken
     {

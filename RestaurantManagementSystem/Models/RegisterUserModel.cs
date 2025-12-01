@@ -2,7 +2,7 @@
 
 namespace RestaurantManagementSystem.DTOs
 {
-    public class RegisterUserDto
+    public class RegisterUserModel
     {
         [Required]
         public string Name { get; set; }

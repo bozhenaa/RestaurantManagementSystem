@@ -1,12 +1,12 @@
-﻿using RestaurantManagementSystem.DTOs;
-using RestaurantManagementSystem.Models;
+﻿using RestaurantManagementSystem.Data.Entities;
+using RestaurantManagementSystem.DTOs;
 
 namespace RestaurantManagementSystem.Services
 {
     public interface IAuthService
     {
-        Task RegisterUser(RegisterUserDto registerUserDto);
-        Task<string> LogInUser(LogInDto signInUserDto);
+        Task RegisterUser(RegisterUserModel registerUserDto);
+        Task<string> LogInUser(LogInModel signInUserDto);
         Task<string> GetUserToken(User user);
     }
 }

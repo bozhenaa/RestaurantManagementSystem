@@ -1,5 +1,5 @@
-﻿using RestaurantManagementSystem.DTOs;
-using RestaurantManagementSystem.Models;
+﻿using RestaurantManagementSystem.Data.Entities;
+using RestaurantManagementSystem.DTOs;
 using RestaurantManagementSystem.Repositories;
 
 namespace RestaurantManagementSystem.Services
@@ -11,7 +11,7 @@ namespace RestaurantManagementSystem.Services
         {
             _menuItemRepository = menuItemRepository;
         }
-        public async Task AddMenuItem(AddMenuItemDto menuItem)
+        public async Task AddMenuItem(AddMenuItemModel menuItem)
         {
             if (menuItem == null)
             {
@@ -62,7 +62,7 @@ namespace RestaurantManagementSystem.Services
             await _menuItemRepository.RemoveMenuItem(menuItem);
         }
 
-        public async Task DeletePromoPrice(MenuItem menuItem)
+        public async Task RemovePromoPrice(MenuItem menuItem)
         {
             if (menuItem == null)
             {
@@ -79,6 +79,15 @@ namespace RestaurantManagementSystem.Services
                 throw new ArgumentNullException();
             }
            await _menuItemRepository.UpdateMenuItem(menuItem);
+        }
+
+        public async Task DeleteMenuItem(MenuItem menuItem)
+        {
+            if (menuItem == null)
+            {
+                throw new ArgumentNullException();
+            }
+            await _menuItemRepository.RemoveMenuItem(menuItem);
         }
     }
 }

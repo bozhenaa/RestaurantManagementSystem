@@ -1,8 +1,8 @@
 ﻿using Azure.Core;
 using Microsoft.IdentityModel.Tokens;
+using RestaurantManagementSystem.Data.Entities;
 using RestaurantManagementSystem.DTOs;
 using RestaurantManagementSystem.Enums;
-using RestaurantManagementSystem.Models;
 using RestaurantManagementSystem.Repositories;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -43,7 +43,7 @@ namespace RestaurantManagementSystem.Services
             var encodedToken = tokenHandler.WriteToken(token);
             return encodedToken;
         }
-        public async Task RegisterUser(RegisterUserDto request)
+        public async Task RegisterUser(RegisterUserModel request)
         {
             if (await _userRepository.GetUserByEmail(request.Email) != null || await _userRepository.GetUserByUsername(request.Username) != null)
             {
@@ -62,7 +62,7 @@ namespace RestaurantManagementSystem.Services
             await _userRepository.AddUser(user);
         }
 
-        public async Task<string> LogInUser(LogInDto request)
+        public async Task<string> LogInUser(LogInModel request)
         {
             var user = await _userRepository.GetUserByUsernameOrEmail(request.UsernameOrEmail);
             if (user == null)

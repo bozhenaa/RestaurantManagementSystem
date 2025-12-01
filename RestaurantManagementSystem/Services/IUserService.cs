@@ -1,5 +1,5 @@
-﻿using RestaurantManagementSystem.DTOs;
-using RestaurantManagementSystem.Models;
+﻿using RestaurantManagementSystem.Data.Entities;
+using RestaurantManagementSystem.DTOs;
 
 namespace RestaurantManagementSystem.Services
 {
@@ -10,6 +10,6 @@ namespace RestaurantManagementSystem.Services
 
         Task CreateUser(User user);
         Task DeleteUser(int userId);
-        Task UpdateUser(UpdateUserInfoDto user);
+        Task UpdateUser(UpdateUserInfoModel user);
     }
 }

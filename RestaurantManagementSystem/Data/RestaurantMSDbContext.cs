@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore; 
+﻿using Microsoft.EntityFrameworkCore;
 using System;
-using RestaurantManagementSystem.Models;
+using RestaurantManagementSystem.Data.Entities;
 
 namespace RestaurantManagementSystem.Data
 {

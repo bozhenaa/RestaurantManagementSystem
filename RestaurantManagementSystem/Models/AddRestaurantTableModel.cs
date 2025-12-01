@@ -2,7 +2,7 @@
 
 namespace RestaurantManagementSystem.DTOs
 {
-    public class AddRestaurantTableDto
+    public class AddRestaurantTableModel
     {
         public int TableNumber { get; set; }
         public int Seats { get; set; }

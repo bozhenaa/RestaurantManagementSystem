@@ -1,12 +1,12 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using RestaurantManagementSystem.Data;
 using RestaurantManagementSystem.DTOs;
-using RestaurantManagementSystem.Models;
 using RestaurantManagementSystem.Repositories;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using BCrypt.Net;
+using RestaurantManagementSystem.Data.Entities;
 
 namespace RestaurantManagementSystem.Services
 {
@@ -30,7 +30,7 @@ namespace RestaurantManagementSystem.Services
             }
             await _userRepository.AddUser(user);
         }
-        public async Task UpdateUser(UpdateUserInfoDto user)
+        public async Task UpdateUser(UpdateUserInfoModel user)
         {
             if (user == null)
             {

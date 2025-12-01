@@ -1,6 +1,6 @@
-﻿using RestaurantManagementSystem.DTOs;
+﻿using RestaurantManagementSystem.Data.Entities;
+using RestaurantManagementSystem.DTOs;
 using RestaurantManagementSystem.Enums;
-using RestaurantManagementSystem.Models;
 using RestaurantManagementSystem.Repositories;
 
 namespace RestaurantManagementSystem.Services
@@ -14,7 +14,7 @@ namespace RestaurantManagementSystem.Services
         {
             _restaurantTablerepository = restaurantTableRepository;
         }
-        public async Task AddTable(AddRestaurantTableDto table)
+        public async Task AddTable(AddRestaurantTableModel table)
         {
             if (table == null)
             {
@@ -85,7 +85,7 @@ namespace RestaurantManagementSystem.Services
             return existingTables;
         }
 
-        public async Task UpdateTable(AddRestaurantTableDto table)
+        public async Task UpdateTable(AddRestaurantTableModel table)
         {
             if (table == null)
             {

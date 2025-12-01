@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RestaurantManagementSystem.Data.Entities;
 using RestaurantManagementSystem.DTOs;
-using RestaurantManagementSystem.Models;
 using RestaurantManagementSystem.Services;
 
 namespace RestaurantManagementSystem.Controllers
@@ -48,7 +48,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpPost("add-menu-item")]
-        public async Task<ActionResult> AddMenuItem([FromBody] AddMenuItemDto menuItem)
+        public async Task<ActionResult> AddMenuItem([FromBody] AddMenuItemModel menuItem)
         {
             try
             {

@@ -2,7 +2,7 @@
 
 namespace RestaurantManagementSystem.DTOs
 {
-    public class UpdateUserInfoDto
+    public class UpdateUserInfoModel
     {
         [Required]
         public string Username { get; set; }

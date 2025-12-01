@@ -1,11 +1,11 @@
-﻿using RestaurantManagementSystem.DTOs;
-using RestaurantManagementSystem.Models;
+﻿using RestaurantManagementSystem.Data.Entities;
+using RestaurantManagementSystem.DTOs;
 
 namespace RestaurantManagementSystem.Services
 {
     public interface IMenuItemService
     {
-        Task AddMenuItem(AddMenuItemDto menuItem);
+        Task AddMenuItem(AddMenuItemModel menuItem);
         Task DeleteMenuItem(MenuItem menuItem);
         Task UpdateMenuItem(MenuItem menuItem);
         Task<MenuItem> GetMenuItemById(int id);

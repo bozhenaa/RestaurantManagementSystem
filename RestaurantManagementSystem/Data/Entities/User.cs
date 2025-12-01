@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using RestaurantManagementSystem.Enums;
 
-namespace RestaurantManagementSystem.Models
+namespace RestaurantManagementSystem.Data.Entities
 {
     public class User
     {

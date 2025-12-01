@@ -1,6 +1,6 @@
-﻿using RestaurantManagementSystem.DTOs;
+﻿using RestaurantManagementSystem.Data.Entities;
+using RestaurantManagementSystem.DTOs;
 using RestaurantManagementSystem.Enums;
-using RestaurantManagementSystem.Models;
 
 namespace RestaurantManagementSystem.Services
 {
@@ -10,8 +10,8 @@ namespace RestaurantManagementSystem.Services
         Task<IEnumerable<RestaurantTable>> GetAllTables();
         Task<RestaurantTable> GetTableByNumber(int tableNumber);
         Task<IEnumerable<RestaurantTable>> GetTablesByRoom(RoomName roomName);
-        Task AddTable(AddRestaurantTableDto table);
-        Task UpdateTable(AddRestaurantTableDto table);
+        Task AddTable(AddRestaurantTableModel table);
+        Task UpdateTable(AddRestaurantTableModel table);
         Task DeleteTable(RestaurantTable table );
     }
 }

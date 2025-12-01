@@ -1,5 +1,5 @@
 ﻿using RestaurantManagementSystem.Repositories;
-using RestaurantManagementSystem.Models;
+using RestaurantManagementSystem.Data.Entities;
 namespace RestaurantManagementSystem.Services
 {
     public class PasswordTokenServices :IPasswordTokenService

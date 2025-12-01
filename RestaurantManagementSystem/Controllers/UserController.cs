@@ -3,7 +3,7 @@ using RestaurantManagementSystem.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Authorization;
-using RestaurantManagementSystem.Models;
+using RestaurantManagementSystem.Data;
 using RestaurantManagementSystem.DTOs;
 
 namespace RestaurantManagementSystem.Controllers
@@ -45,7 +45,7 @@ namespace RestaurantManagementSystem.Controllers
 
 
         [HttpPost("register-user")]
-        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto request)
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserModel request)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpPost("login-user")]
-        public async Task<IActionResult> LogInUser([FromBody] LogInDto request)
+        public async Task<IActionResult> LogInUser([FromBody] LogInModel request)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpPut("update-user")]
-        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserInfoDto request)
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserInfoModel request)
         {
             try
             {
