@@ -10,6 +10,7 @@ namespace RestaurantManagementSystem.Services.IServices
         Task UpdateMenuItem(MenuItem menuItem);
         Task<MenuItem> GetMenuItemById(int id);
         Task<IEnumerable<MenuItem>> GetAllMenuItems();
+        Task<decimal> GetPrice(int id);
         Task AddPromoPrice(MenuItem menuItem, decimal newPrice);
         Task RemovePromoPrice(MenuItem menuItem);
 

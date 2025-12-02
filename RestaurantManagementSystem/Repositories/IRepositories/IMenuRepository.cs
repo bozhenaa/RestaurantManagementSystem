@@ -1,6 +1,6 @@
 ﻿using RestaurantManagementSystem.Data.Entities;
 
-namespace RestaurantManagementSystem.Repositories
+namespace RestaurantManagementSystem.Repositories.IRepositories
 {
     public interface IMenuRepository
     {

@@ -9,7 +9,7 @@ namespace RestaurantManagementSystem.Repositories
     public class MenuItemRepository : IMenuItemRepository
     {
         private readonly RestaurantMSDbContext _context;
-        public MenuItemRepository(RestaurantMSDbContext context) 
+        public MenuItemRepository(RestaurantMSDbContext context)
         {
             _context = context;
         }

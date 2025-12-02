@@ -11,6 +11,7 @@ using RestaurantManagementSystem.Data;
 using RestaurantManagementSystem.Repositories;
 using RestaurantManagementSystem.Repositories.IRepositories;
 using RestaurantManagementSystem.Services;
+using RestaurantManagementSystem.Services.IServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -116,6 +117,8 @@ namespace RestaurantManagementSystem
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IMenuItemRepository, MenuItemRepository>();
             services.AddScoped<IMenuItemService, MenuItemService>();
+            services.AddScoped<IOnlineOrderRepository, OnlineOrderRepository>();
+            services.AddScoped<IOnlineOrderService, OnlineOrderService>();
 
 
 

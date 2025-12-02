@@ -1,6 +1,6 @@
 ﻿using RestaurantManagementSystem.Data.Entities;
 
-namespace RestaurantManagementSystem.Services
+namespace RestaurantManagementSystem.Services.IServices
 {
     public interface IMenuService
     {

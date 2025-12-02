@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RestaurantManagementSystem.Services;
+using RestaurantManagementSystem.Services.IServices;
 
 namespace RestaurantManagementSystem.Controllers
 {

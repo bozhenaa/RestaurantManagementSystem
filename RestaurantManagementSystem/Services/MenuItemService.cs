@@ -35,7 +35,7 @@ namespace RestaurantManagementSystem.Services
 
             };
             await _menuItemRepository.AddMenuItem(newMenuItem);
-            
+
 
         }
 
@@ -51,7 +51,7 @@ namespace RestaurantManagementSystem.Services
 
         public async Task<IEnumerable<MenuItem>> GetAllMenuItems()
         {
-           return await _menuItemRepository.GetAllMenuItems();
+            return await _menuItemRepository.GetAllMenuItems();
         }
 
         public async Task<MenuItem> GetMenuItemById(int id)
@@ -89,7 +89,7 @@ namespace RestaurantManagementSystem.Services
             {
                 throw new ArgumentNullException();
             }
-           await _menuItemRepository.UpdateMenuItem(menuItem);
+            await _menuItemRepository.UpdateMenuItem(menuItem);
         }
 
         public async Task DeleteMenuItem(MenuItem menuItem)
@@ -99,6 +99,16 @@ namespace RestaurantManagementSystem.Services
                 throw new ArgumentNullException();
             }
             await _menuItemRepository.RemoveMenuItem(menuItem);
+        }
+
+        public async Task<decimal> GetPrice(int id)
+        {
+            var menuItem = await _menuItemRepository.GetMenuItemById(id);
+            if (menuItem == null)
+            {
+                throw new ArgumentNullException();
+            }
+            return menuItem.PromoPrice ?? menuItem.Price;
         }
     }
 }

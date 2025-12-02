@@ -18,6 +18,7 @@ namespace RestaurantManagementSystem.DTOs
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         [MinLength(6)]
