@@ -1,7 +1,7 @@
 ﻿using RestaurantManagementSystem.Data.Entities;
 using RestaurantManagementSystem.DTOs;
 
-namespace RestaurantManagementSystem.Services
+namespace RestaurantManagementSystem.Services.IServices
 {
     public interface IAuthService
     {

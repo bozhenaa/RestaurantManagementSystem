@@ -1,7 +1,8 @@
 ﻿using RestaurantManagementSystem.Data.Entities;
 using RestaurantManagementSystem.DTOs;
 using RestaurantManagementSystem.Enums;
-using RestaurantManagementSystem.Repositories;
+using RestaurantManagementSystem.Repositories.IRepositories;
+using RestaurantManagementSystem.Services.IServices;
 
 namespace RestaurantManagementSystem.Services
 

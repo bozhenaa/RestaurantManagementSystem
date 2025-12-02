@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RestaurantManagementSystem.Data;
 using RestaurantManagementSystem.Repositories;
+using RestaurantManagementSystem.Repositories.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.IO;

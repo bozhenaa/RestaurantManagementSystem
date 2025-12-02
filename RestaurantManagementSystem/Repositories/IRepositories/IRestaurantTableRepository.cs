@@ -1,7 +1,7 @@
 ﻿using RestaurantManagementSystem.Data.Entities;
 using RestaurantManagementSystem.Enums;
 
-namespace RestaurantManagementSystem.Repositories
+namespace RestaurantManagementSystem.Repositories.IRepositories
 {
     public interface IRestaurantTableRepository
     {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestaurantManagementSystem.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Authorization;
 using RestaurantManagementSystem.Data;
 using RestaurantManagementSystem.DTOs;
+using RestaurantManagementSystem.Services.IServices;
 
 namespace RestaurantManagementSystem.Controllers
 {
@@ -21,6 +21,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpGet("by-username/{username}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetUserByUsername(string username)
         {
             var user = await _userService.GetUserByUsername(username);
@@ -32,6 +33,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpGet("by-email/{email}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetUserByEmail(string email)
         {
 
@@ -45,6 +47,7 @@ namespace RestaurantManagementSystem.Controllers
 
 
         [HttpPost("register-user")]
+        [Authorize(Roles ="admin, employee, client")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserModel request)
         {
             try
@@ -67,6 +70,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpPost("login-user")]
+        [Authorize(Roles = "admin, employee, client")]
         public async Task<IActionResult> LogInUser([FromBody] LogInModel request)
         {
             try
@@ -89,6 +93,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpPut("update-user")]
+        [Authorize(Roles = "admin, employee, client")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserInfoModel request)
         {
             try
@@ -107,6 +112,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpDelete("delete-user")]
+        [Authorize(Roles = "admin, employee, client")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             try

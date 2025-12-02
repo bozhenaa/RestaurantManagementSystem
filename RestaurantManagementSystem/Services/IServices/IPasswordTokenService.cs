@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace RestaurantManagementSystem.Services
+namespace RestaurantManagementSystem.Services.IServices
 {
     public interface IPasswordTokenService
     {

@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestaurantManagementSystem.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Authorization;
 using RestaurantManagementSystem.Data;
 using RestaurantManagementSystem.DTOs;
 using RestaurantManagementSystem.Enums;
+using RestaurantManagementSystem.Services.IServices;
 
 namespace RestaurantManagementSystem.Controllers
 {
@@ -21,6 +21,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpGet("all-tables")]
+        [Authorize(Roles = "admin, employee")]
         public async Task<IActionResult> GetAllTables()
         {
             try
@@ -35,6 +36,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpGet("table-by-id/{id}")]
+        [Authorize(Roles ="admin, employee")]
         public async Task<IActionResult> GetTableById(int id)
         {
             try
@@ -52,6 +54,7 @@ namespace RestaurantManagementSystem.Controllers
             }
         }
         [HttpGet("table-by-number")]
+        [Authorize(Roles ="admin, employee")]
         public async Task<IActionResult> GetTableByNumber([FromQuery] int tableNumber)
         {
             try
@@ -70,6 +73,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpGet("tables-by-room/{roomName}")]
+        [Authorize(Roles ="admin, employee")]
         public async Task<IActionResult> GetTablesByRoom(RoomName roomName)
         {
             try
@@ -88,6 +92,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpDelete("delete-table/{id}")]
+        [Authorize(Roles="admin")]
         public async Task<IActionResult> DeleteTable(int id)
         {
             try
@@ -107,6 +112,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpPost("add-table")]
+        [Authorize(Roles ="admin, employee")]
         public async Task<IActionResult> AddTable([FromBody] AddRestaurantTableModel table)
         {
             try
@@ -125,6 +131,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpPut("update-table")]
+        [Authorize(Roles ="admin, employee")]
         public async Task<IActionResult> UpdateTable([FromBody] AddRestaurantTableModel table)
         {
             try

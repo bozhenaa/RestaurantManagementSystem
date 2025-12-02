@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RestaurantManagementSystem.Data.Entities;
 using RestaurantManagementSystem.DTOs;
-using RestaurantManagementSystem.Services;
+using RestaurantManagementSystem.Services.IServices;
 
 namespace RestaurantManagementSystem.Controllers
 {
@@ -16,6 +17,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpGet("get-all-menu-items")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetAllMenuItems()
         {
             try
@@ -30,6 +32,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpGet("get-menu-item-by-id")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetMenuItemById([FromQuery] int id)
         {
             try
@@ -48,6 +51,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpPost("add-menu-item")]
+        [Authorize(Roles = "admin, employee")]
         public async Task<ActionResult> AddMenuItem([FromBody] AddMenuItemModel menuItem)
         {
             try
@@ -66,6 +70,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpPut("update-menu-item")]
+        [Authorize(Roles = "admin, employee")]
         public async Task<ActionResult> UpdateMenuItem([FromBody]MenuItem menuItem)
         {
             try
@@ -84,6 +89,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpDelete("delete-menu-item")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> DeleteMenuItem([FromBody] MenuItem menuItem)
         {
             try

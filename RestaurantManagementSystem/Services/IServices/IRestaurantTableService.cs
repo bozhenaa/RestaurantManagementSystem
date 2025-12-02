@@ -2,7 +2,7 @@
 using RestaurantManagementSystem.DTOs;
 using RestaurantManagementSystem.Enums;
 
-namespace RestaurantManagementSystem.Services
+namespace RestaurantManagementSystem.Services.IServices
 {
     public interface IRestaurantTableService
     {

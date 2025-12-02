@@ -1,5 +1,6 @@
 ﻿using RestaurantManagementSystem.Data;
 using RestaurantManagementSystem.Data.Entities;
+using RestaurantManagementSystem.Repositories.IRepositories;
 
 namespace RestaurantManagementSystem.Repositories
 {

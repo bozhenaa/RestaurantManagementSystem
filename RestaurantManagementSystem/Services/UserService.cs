@@ -1,12 +1,13 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using RestaurantManagementSystem.Data;
 using RestaurantManagementSystem.DTOs;
-using RestaurantManagementSystem.Repositories;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using BCrypt.Net;
 using RestaurantManagementSystem.Data.Entities;
+using RestaurantManagementSystem.Repositories.IRepositories;
+using RestaurantManagementSystem.Services.IServices;
 
 namespace RestaurantManagementSystem.Services
 {

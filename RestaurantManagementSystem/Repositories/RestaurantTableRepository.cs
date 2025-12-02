@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RestaurantManagementSystem.Enums;
 using RestaurantManagementSystem.Data.Entities;
+using RestaurantManagementSystem.Repositories.IRepositories;
 
 namespace RestaurantManagementSystem.Repositories
 {
