@@ -9,7 +9,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RestaurantManagementSystem.Data;
 using RestaurantManagementSystem.Repositories;
+<<<<<<< HEAD
 using RestaurantManagementSystem.Repositories.IRepositories;
+=======
+using RestaurantManagementSystem.Services;
+>>>>>>> 28e1ebdcf286092c8fbdd115afdfa196754ad10d
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -99,11 +103,23 @@ namespace RestaurantManagementSystem
                 });
 
            
+
             services.AddDbContext<RestaurantMSDbContext>(options =>
                 options.UseSqlServer(conn));
 
+            services.AddControllers()
+    .AddJsonOptions(x =>
+        x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPasswordTokenRepository, PasswordTokenRepository>();
+            services.AddScoped<IMenuItemRepository, MenuItemRepository>();
+            services.AddScoped<IMenuItemService, MenuItemService>();
+            services.AddScoped<IMenuRepository, MenuRepository>();
+            services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<IMenuItemRepository, MenuItemRepository>();
+            services.AddScoped<IMenuItemService, MenuItemService>();
+
 
 
 
