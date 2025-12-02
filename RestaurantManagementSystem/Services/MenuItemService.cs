@@ -11,6 +11,11 @@ namespace RestaurantManagementSystem.Services
         {
             _menuItemRepository = menuItemRepository;
         }
+        public MenuItemService(IMenuItemRepository menuItemRepository)
+        {
+            _menuItemRepository = menuItemRepository;
+        }
+
         public async Task AddMenuItem(AddMenuItemModel menuItem)
         {
             if (menuItem == null)
@@ -23,9 +28,13 @@ namespace RestaurantManagementSystem.Services
                 Description = menuItem.Description,
                 Price = menuItem.Price,
                 PromoPrice = menuItem.PromoPrice,
-                Weight = menuItem.Weight
+                Weight = menuItem.Weight,
+                Category = menuItem.Category,
+
             };
             await _menuItemRepository.AddMenuItem(newMenuItem);
+            
+
         }
 
         public async Task AddPromoPrice(MenuItem menuItem, decimal newPrice)

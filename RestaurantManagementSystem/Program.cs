@@ -13,5 +13,6 @@ namespace RestaurantManagementSystem
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }

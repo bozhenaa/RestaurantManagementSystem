@@ -1,4 +1,5 @@
 ﻿using RestaurantManagementSystem.Enums;
+using System.Text.Json.Serialization;
 
 namespace RestaurantManagementSystem.Data.Entities
 {
@@ -11,6 +12,9 @@ namespace RestaurantManagementSystem.Data.Entities
         public int Weight { get; set; }
         public decimal Price { get; set; }  
         public decimal? PromoPrice { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Menu> Menus { get; set; } = new List<Menu>();
 
     }
 }
