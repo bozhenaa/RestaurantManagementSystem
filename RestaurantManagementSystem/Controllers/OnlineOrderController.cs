@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using RestaurantManagementSystem.Data.Entities;
+using RestaurantManagementSystem.Models;
 using RestaurantManagementSystem.Services.IServices;
 
 namespace RestaurantManagementSystem.Controllers
@@ -28,6 +31,26 @@ namespace RestaurantManagementSystem.Controllers
             }
         }
 
+        [HttpPost("create-online-order")]
+        [Authorize]
+        public async Task<IActionResult> CreateOnlineOrder([FromBody] CreateOnlineOrderModel onlineOrder)
+        {
+            try
+            {
+                var userId = User.FindFirst("id");
+                if (userId == null)
+                {
+                    return Unauthorized();
+                }
+                int userIdValue = int.Parse(userId.ToString());
+                await _onlineOrderService.CreateOrder(userIdValue, onlineOrder);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
+        }
     }
 }

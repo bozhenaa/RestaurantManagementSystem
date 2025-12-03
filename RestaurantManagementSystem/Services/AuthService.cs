@@ -33,6 +33,7 @@ namespace RestaurantManagementSystem.Services
             {
                 Subject = new System.Security.Claims.ClaimsIdentity(new[]
                 {
+                   new Claim("id", user.Id.ToString()),
                    new Claim("username", user.Username),
                    new Claim("role", user.UserRole.ToString())
                 }),

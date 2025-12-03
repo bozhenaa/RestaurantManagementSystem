@@ -8,6 +8,9 @@ namespace RestaurantManagementSystem.Models
         public string DeliveryAddress { get; set; }
 
         [Required]
+        public string PhoneNumber { get; set; }
+
+        [Required]
         public List<CartItemsModel> Items { get; set; }
     }
 
@@ -17,7 +20,7 @@ namespace RestaurantManagementSystem.Models
         public int MenuItemId { get; set; }
 
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Quantity must be at least 1")]
+        [Range(1, 10, ErrorMessage = "Quantity must be at least 1")]
         public int Quantity { get; set; }
     }
 }

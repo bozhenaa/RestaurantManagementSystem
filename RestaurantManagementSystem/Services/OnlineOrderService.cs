@@ -33,6 +33,7 @@ namespace RestaurantManagementSystem.Services
             var newOrder = new OnlineOrder
             {
                 UserId = userId,
+                CustomerPhone = order.PhoneNumber,
                 DeliveryAddress = order.DeliveryAddress,
                 OrderDate = DateTime.UtcNow,
                 Status = OnlineOrderStatus.Pending,

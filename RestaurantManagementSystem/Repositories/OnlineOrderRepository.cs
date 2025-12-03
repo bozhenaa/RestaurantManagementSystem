@@ -27,6 +27,10 @@ namespace RestaurantManagementSystem.Repositories
                 .ToListAsync();
         }
 
+        public async Task<OnlineOrder> GetOrderById(int id)
+        {
+            return await _context.OnlineOrders.FirstOrDefaultAsync(o => o.Id == id);
+        }
         public async Task<IEnumerable<OnlineOrder>> GetOrdersByCustomerId(int userId)
         {
             return await _context.OnlineOrders
