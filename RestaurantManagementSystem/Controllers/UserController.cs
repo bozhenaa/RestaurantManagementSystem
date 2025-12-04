@@ -47,7 +47,9 @@ namespace RestaurantManagementSystem.Controllers
 
 
         [HttpPost("register-user")]
-        [Authorize(Roles ="admin, employee, client")]
+        [AllowAnonymous]
+        //[Authorize(Roles ="admin, employee, client")]
+        //nqma kak da se registrirash za6toto nqmash rolq 
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserModel request)
         {
             try

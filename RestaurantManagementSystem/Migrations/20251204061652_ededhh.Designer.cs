@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantManagementSystem.Data;
 
@@ -11,9 +12,11 @@ using RestaurantManagementSystem.Data;
 namespace RestaurantManagementSystem.Migrations
 {
     [DbContext(typeof(RestaurantMSDbContext))]
-    partial class RestaurantMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251204061652_ededhh")]
+    partial class ededhh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,30 +38,6 @@ namespace RestaurantManagementSystem.Migrations
                     b.HasIndex("MenusId");
 
                     b.ToTable("MenuMenuItems", (string)null);
-                });
-
-            modelBuilder.Entity("RestaurantManagementSystem.Data.Entities.Ingredient", b =>
-                {
-                    b.Property<int>("IngredientId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IngredientId"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Unit")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IngredientId");
-
-                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("RestaurantManagementSystem.Data.Entities.Menu", b =>
@@ -109,32 +88,6 @@ namespace RestaurantManagementSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MenuItems");
-                });
-
-            modelBuilder.Entity("RestaurantManagementSystem.Data.Entities.MenuItemIngredient", b =>
-                {
-                    b.Property<int>("MenuItemIngredientId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MenuItemIngredientId"));
-
-                    b.Property<int>("IngredientId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MenuItemId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("RequiredQuantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("MenuItemIngredientId");
-
-                    b.HasIndex("IngredientId");
-
-                    b.HasIndex("MenuItemId");
-
-                    b.ToTable("MenuItemIngredients");
                 });
 
             modelBuilder.Entity("RestaurantManagementSystem.Data.Entities.PasswordToken", b =>
@@ -235,25 +188,6 @@ namespace RestaurantManagementSystem.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RestaurantManagementSystem.Data.Entities.MenuItemIngredient", b =>
-                {
-                    b.HasOne("RestaurantManagementSystem.Data.Entities.Ingredient", "Ingredient")
-                        .WithMany("MenuItemIngredients")
-                        .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("RestaurantManagementSystem.Data.Entities.MenuItem", "MenuItem")
-                        .WithMany("MenuItemIngredients")
-                        .HasForeignKey("MenuItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ingredient");
-
-                    b.Navigation("MenuItem");
-                });
-
             modelBuilder.Entity("RestaurantManagementSystem.Data.Entities.PasswordToken", b =>
                 {
                     b.HasOne("RestaurantManagementSystem.Data.Entities.User", "User")
@@ -263,16 +197,6 @@ namespace RestaurantManagementSystem.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("RestaurantManagementSystem.Data.Entities.Ingredient", b =>
-                {
-                    b.Navigation("MenuItemIngredients");
-                });
-
-            modelBuilder.Entity("RestaurantManagementSystem.Data.Entities.MenuItem", b =>
-                {
-                    b.Navigation("MenuItemIngredients");
                 });
 #pragma warning restore 612, 618
         }

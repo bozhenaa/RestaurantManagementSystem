@@ -51,7 +51,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpPost("add-menu-item")]
-        [Authorize(Roles = "admin, employee")]
+         [Authorize(Roles = "admin, employee")]
         public async Task<ActionResult> AddMenuItem([FromBody] AddMenuItemModel menuItem)
         {
             try

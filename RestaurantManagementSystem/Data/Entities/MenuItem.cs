@@ -15,6 +15,7 @@ namespace RestaurantManagementSystem.Data.Entities
 
         [JsonIgnore]
         public ICollection<Menu> Menus { get; set; } = new List<Menu>();
+        public ICollection<MenuItemIngredient> MenuItemIngredients { get; set; } = new List<MenuItemIngredient>();
 
     }
 }
