@@ -20,7 +20,7 @@ namespace RestaurantManagementSystem.Controllers
             _authService = authService;
         }
 
-        [HttpGet("by-username/{username}")]
+        [HttpGet("{username}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetUserByUsername(string username)
         {
@@ -32,7 +32,7 @@ namespace RestaurantManagementSystem.Controllers
             return Ok(user);
         }
 
-        [HttpGet("by-email/{email}")]
+        [HttpGet("{email}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetUserByEmail(string email)
         {
@@ -46,7 +46,7 @@ namespace RestaurantManagementSystem.Controllers
         }
 
 
-        [HttpPost("register-user")]
+        [HttpPost("register")]
         [Authorize(Roles ="admin, employee, client")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserModel request)
         {
@@ -69,7 +69,7 @@ namespace RestaurantManagementSystem.Controllers
             }
         }
 
-        [HttpPost("login-user")]
+        [HttpPost("login")]
         [Authorize(Roles = "admin, employee, client")]
         public async Task<IActionResult> LogInUser([FromBody] LogInModel request)
         {
@@ -92,7 +92,7 @@ namespace RestaurantManagementSystem.Controllers
             }
         }
 
-        [HttpPut("update-user")]
+        [HttpPut]
         [Authorize(Roles = "admin, employee, client")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserInfoModel request)
         {
@@ -111,7 +111,7 @@ namespace RestaurantManagementSystem.Controllers
             }
         }
 
-        [HttpDelete("delete-user")]
+        [HttpDelete]
         [Authorize(Roles = "admin, employee, client")]
         public async Task<IActionResult> DeleteUser(int id)
         {

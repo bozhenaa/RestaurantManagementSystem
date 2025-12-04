@@ -20,7 +20,7 @@ namespace RestaurantManagementSystem.Controllers
             _restaurantTableService = restaurantTableService;
         }
 
-        [HttpGet("all-tables")]
+        [HttpGet]
         [Authorize(Roles = "admin, employee")]
         public async Task<IActionResult> GetAllTables()
         {
@@ -35,7 +35,7 @@ namespace RestaurantManagementSystem.Controllers
             }
         }
 
-        [HttpGet("table-by-id/{id}")]
+        [HttpGet("{id}")]
         [Authorize(Roles ="admin, employee")]
         public async Task<IActionResult> GetTableById(int id)
         {
@@ -53,7 +53,7 @@ namespace RestaurantManagementSystem.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("table-by-number")]
+        [HttpGet("number/{tableNumber}")]
         [Authorize(Roles ="admin, employee")]
         public async Task<IActionResult> GetTableByNumber([FromQuery] int tableNumber)
         {
@@ -72,7 +72,7 @@ namespace RestaurantManagementSystem.Controllers
             }
         }
 
-        [HttpGet("tables-by-room/{roomName}")]
+        [HttpGet("room/{roomName}")]
         [Authorize(Roles ="admin, employee")]
         public async Task<IActionResult> GetTablesByRoom(RoomName roomName)
         {
@@ -91,7 +91,7 @@ namespace RestaurantManagementSystem.Controllers
             }
         }
 
-        [HttpDelete("delete-table/{id}")]
+        [HttpDelete("{id}")]
         [Authorize(Roles="admin")]
         public async Task<IActionResult> DeleteTable(int id)
         {
@@ -111,7 +111,7 @@ namespace RestaurantManagementSystem.Controllers
             }
         }
 
-        [HttpPost("add-table")]
+        [HttpPost]
         [Authorize(Roles ="admin, employee")]
         public async Task<IActionResult> AddTable([FromBody] AddRestaurantTableModel table)
         {
@@ -130,7 +130,7 @@ namespace RestaurantManagementSystem.Controllers
             }
         }
 
-        [HttpPut("update-table")]
+        [HttpPut]
         [Authorize(Roles ="admin, employee")]
         public async Task<IActionResult> UpdateTable([FromBody] AddRestaurantTableModel table)
         {

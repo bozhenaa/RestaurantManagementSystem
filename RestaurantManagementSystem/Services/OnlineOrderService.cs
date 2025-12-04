@@ -71,5 +71,16 @@ namespace RestaurantManagementSystem.Services
         {
            await _orderRepository.UpdateOrder(order);
         }
+
+        public async Task UpdateOrderStatus(int orderId, OnlineOrderStatus status)
+        {
+            var onlineOrder = await GetOrderById(orderId);
+            if (onlineOrder == null)
+            {
+                throw new KeyNotFoundException();
+            }
+            onlineOrder.Status = status;
+            await UpdateOrder(onlineOrder);
+        }
     }
 }

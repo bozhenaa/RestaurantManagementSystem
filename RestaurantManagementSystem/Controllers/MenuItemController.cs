@@ -16,7 +16,7 @@ namespace RestaurantManagementSystem.Controllers
             _menuItemService = menuItemService;
         }
 
-        [HttpGet("get-all-menu-items")]
+        [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult> GetAllMenuItems()
         {
@@ -31,7 +31,7 @@ namespace RestaurantManagementSystem.Controllers
             }
         }
 
-        [HttpGet("get-menu-item-by-id")]
+        [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult> GetMenuItemById([FromQuery] int id)
         {
@@ -50,7 +50,7 @@ namespace RestaurantManagementSystem.Controllers
             }
         }
 
-        [HttpPost("add-menu-item")]
+        [HttpPost]
         [Authorize(Roles = "admin, employee")]
         public async Task<ActionResult> AddMenuItem([FromBody] AddMenuItemModel menuItem)
         {
@@ -69,7 +69,7 @@ namespace RestaurantManagementSystem.Controllers
             }
         }
 
-        [HttpPut("update-menu-item")]
+        [HttpPut]
         [Authorize(Roles = "admin, employee")]
         public async Task<ActionResult> UpdateMenuItem([FromBody]MenuItem menuItem)
         {
@@ -88,7 +88,7 @@ namespace RestaurantManagementSystem.Controllers
             }
         }
 
-        [HttpDelete("delete-menu-item")]
+        [HttpDelete]
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> DeleteMenuItem([FromBody] MenuItem menuItem)
         {
