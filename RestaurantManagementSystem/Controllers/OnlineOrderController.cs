@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantManagementSystem.Data.Entities;
@@ -105,6 +106,55 @@ namespace RestaurantManagementSystem.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("{id}/cancel")]
+        [Authorize(Roles = "admin, employee, user")]
+        public async Task<IActionResult> CancelOrder(int id)
+        {
+            try
+            {
+                await _onlineOrderService.CancelOrder(id);
+                return Ok();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest("Order cannot be cancelled");
+            }
+        }
+
+        [HttpGet("{orderId}/track")]
+        [Authorize(Roles = "admin, employee, user")]
+        public async Task<IActionResult> TrackOrder(int orderId)
+        {
+            try
+            {
+                //TODO trackorder int esitamedTime = await _onlineOrderService.TrackOrder(int orderId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("{orderId}/for-delivery")]
+        [Authorize(Roles = "admin, employee")]
+        public async Task<IActionResult> OutForDelivery(int orderId)
+        {
+            try
+            {
+                await _onlineOrderService.OutForDelivery(orderId);
+                return Ok();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest();
             }
         }
     }

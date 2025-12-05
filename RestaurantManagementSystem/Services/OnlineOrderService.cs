@@ -82,5 +82,37 @@ namespace RestaurantManagementSystem.Services
             onlineOrder.Status = status;
             await UpdateOrder(onlineOrder);
         }
+
+        public async Task<OnlineOrderStatus> GetOrderStatusByOrderId(int id)
+        {
+            var onlineOrder = await GetOrderById(id);
+            if (onlineOrder == null)
+            {
+                throw new KeyNotFoundException();
+            }
+            return onlineOrder.Status;
+        }
+
+        public async Task CancelOrder(int orderId)
+        {
+            var currentState = await GetOrderStatusByOrderId(orderId);
+            if(currentState == OnlineOrderStatus.Pending)
+            {
+                var order = await GetOrderById(orderId);
+                order.Status = OnlineOrderStatus.Cancelled;
+                await _orderRepository.UpdateOrder(order);
+            }
+            else
+            {
+                throw new InvalidOperationException("Only pending orders can be cancelled.");
+            }
+        }
+
+        public async Task OutForDelivery(int orderId)
+        {
+            var order = await GetOrderById(orderId);
+            order.Status = OnlineOrderStatus.OutForDelivery;
+            await _orderRepository.UpdateOrder(order);
+        }
     }
 }

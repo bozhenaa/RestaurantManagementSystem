@@ -13,5 +13,8 @@ namespace RestaurantManagementSystem.Services.IServices
         Task UpdateOrder(OnlineOrder order);
 
         Task UpdateOrderStatus(int orderId, OnlineOrderStatus status);
+        Task<OnlineOrderStatus> GetOrderStatusByOrderId(int id);
+        Task CancelOrder(int orderId);
+        Task OutForDelivery(int orderId);
     }
 }
