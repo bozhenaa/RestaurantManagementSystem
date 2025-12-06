@@ -46,7 +46,7 @@ namespace RestaurantManagementSystem.Controllers
                 }
                 int userIdValue = int.Parse(userId.Value);
                 await _onlineOrderService.CreateOrder(userIdValue, onlineOrder);
-                return Ok();
+                return Ok($"Your order will arive in aprox. 45 minutes");
             }
             catch (Exception ex)
             {
@@ -124,21 +124,7 @@ namespace RestaurantManagementSystem.Controllers
             }
         }
 
-        [HttpGet("{orderId}/track")]
-        [Authorize(Roles = "admin, employee, user")]
-        public async Task<IActionResult> TrackOrder(int orderId)
-        {
-            try
-            {
-                //TODO trackorder int esitamedTime = await _onlineOrderService.TrackOrder(int orderId);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
+        
         [HttpPut("{orderId}/for-delivery")]
         [Authorize(Roles = "admin, employee")]
         public async Task<IActionResult> OutForDelivery(int orderId)

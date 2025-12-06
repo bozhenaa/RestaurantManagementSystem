@@ -29,6 +29,7 @@ namespace RestaurantManagementSystem.Services
                     PriceAtTimeOfOrder = price
                 };
                 orderItemsList.Add(orderItemEntity);
+                
             }
             var newOrder = new OnlineOrder
             {
