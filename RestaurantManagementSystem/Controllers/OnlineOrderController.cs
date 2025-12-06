@@ -33,12 +33,12 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+       //[Authorize]
         public async Task<IActionResult> CreateOnlineOrder([FromBody] CreateOnlineOrderModel onlineOrder)
         {
             try
             {
-                var userId = User.FindFirst("id");
+                var userId= User.FindFirst("id");
                 if (userId == null)
                 {
                     return Unauthorized();

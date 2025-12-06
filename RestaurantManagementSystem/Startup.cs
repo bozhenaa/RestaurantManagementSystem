@@ -16,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace RestaurantManagementSystem
@@ -24,28 +23,55 @@ namespace RestaurantManagementSystem
     public class Startup
     {
         private readonly IConfiguration _configuration;
+
         public Startup(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(x =>
+                    x.JsonSerializerOptions.ReferenceHandler =
+                        System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 
+         
             var conn = _configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<RestaurantMSDbContext>(options =>
+                options.UseSqlServer(conn));
 
-            var secret = Environment.GetEnvironmentVariable("JWT_SECRET") ?? "temporary_key_for_testing";
-            var key = System.Text.Encoding.ASCII.GetBytes(secret);
+           
+            var secret = _configuration["JWT_SECRET"];
+            var key = Encoding.ASCII.GetBytes(secret);
 
+            
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+            
             services.AddSwaggerGen(c =>
             {
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
-
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
-                c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
+                if (File.Exists(xmlPath))
+                    c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
 
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
@@ -55,11 +81,11 @@ namespace RestaurantManagementSystem
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "JWT",
+                    Description = "JWT Authorization header using the Bearer scheme.",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer"
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -67,58 +93,30 @@ namespace RestaurantManagementSystem
                     {
                         new OpenApiSecurityScheme
                         {
-                            Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                            Reference = new OpenApiReference
                             {
-                                Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                                Type = ReferenceType.SecurityScheme,
                                 Id = "Bearer"
-                            },
-                            Scheme = "Bearer",
-                            Name = "Bearer",
-                            In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-                            Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
+                            }
                         },
                         new List<string>()
                     }
                 });
             });
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(options =>
-                {
-                    options.RequireHttpsMetadata = false;
-                    options.SaveToken = true;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
-
-           
-
-            services.AddDbContext<RestaurantMSDbContext>(options =>
-                options.UseSqlServer(conn));
-
-            services.AddControllers()
-    .AddJsonOptions(x =>
-        x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
-
+            
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPasswordTokenRepository, PasswordTokenRepository>();
             services.AddScoped<IMenuItemRepository, MenuItemRepository>();
             services.AddScoped<IMenuItemService, MenuItemService>();
             services.AddScoped<IMenuRepository, MenuRepository>();
             services.AddScoped<IMenuService, MenuService>();
-            services.AddScoped<IMenuItemRepository, MenuItemRepository>();
-            services.AddScoped<IMenuItemService, MenuItemService>();
             services.AddScoped<IOnlineOrderRepository, OnlineOrderRepository>();
             services.AddScoped<IOnlineOrderService, OnlineOrderService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IIngredientRepository, IngredientRepository>();
+            services.AddScoped<IMenuItemIngredientRepository, MenuItemIngredientRepository>();
 
 
 
@@ -130,11 +128,13 @@ namespace RestaurantManagementSystem
             if (env.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Restaurant Management System API v1"));
+                app.UseSwaggerUI(c =>
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Restaurant Management System API v1"));
             }
 
             app.UseHttpsRedirection();
             app.UseRouting();
+
             app.UseAuthentication();
             app.UseAuthorization();
 

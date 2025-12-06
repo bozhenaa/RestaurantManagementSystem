@@ -8,6 +8,9 @@ namespace RestaurantManagementSystem.Repositories.IRepositories
         Task<IEnumerable<MenuItem>> GetAllMenuItems();
         Task AddMenuItem(MenuItem menuItem);
         Task RemoveMenuItem(MenuItem menuItem);
-        Task UpdateMenuItem (MenuItem menuItem); 
+        Task UpdateMenuItem(MenuItem menuItem);
+
+        
+        Task<MenuItem?> GetMenuItemWithIngredients(int id);
     }
 }

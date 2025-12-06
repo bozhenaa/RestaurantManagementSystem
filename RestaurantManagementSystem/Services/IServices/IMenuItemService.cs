@@ -14,5 +14,8 @@ namespace RestaurantManagementSystem.Services.IServices
         Task AddPromoPrice(MenuItem menuItem, decimal newPrice);
         Task RemovePromoPrice(MenuItem menuItem);
 
+        Task<MenuItem> GetMenuItemWithIngredients(int id);
+
+
     }
 }

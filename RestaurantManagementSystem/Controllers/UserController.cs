@@ -6,6 +6,7 @@ using RestaurantManagementSystem.Data;
 using RestaurantManagementSystem.DTOs;
 using RestaurantManagementSystem.Services.IServices;
 
+
 namespace RestaurantManagementSystem.Controllers
 {
     [ApiController]
@@ -72,13 +73,14 @@ namespace RestaurantManagementSystem.Controllers
         }
 
         [HttpPost("login")]
-        [Authorize(Roles = "admin, employee, client")]
+       // [Authorize(Roles = "admin, employee, client")]
         public async Task<IActionResult> LogInUser([FromBody] LogInModel request)
         {
             try
             {
                 await _authService.LogInUser(request);
-                return Ok();
+                var token = await _authService.LogInUser(request);
+                return Ok(token);
             }
             catch (ArgumentNullException ex)
             {

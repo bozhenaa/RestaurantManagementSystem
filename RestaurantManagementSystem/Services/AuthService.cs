@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using RestaurantManagementSystem.Data.Entities;
 using RestaurantManagementSystem.DTOs;
 using RestaurantManagementSystem.Enums;
@@ -13,45 +12,56 @@ namespace RestaurantManagementSystem.Services
 {
     public class AuthService : IAuthService
     {
-        private IUserRepository _userRepository;
-        private IConfiguration _configuration;
+        private readonly IUserRepository _userRepository;
+        private readonly IConfiguration _configuration;
+
         public AuthService(IUserRepository userRepository, IConfiguration configuration)
         {
             _userRepository = userRepository;
             _configuration = configuration;
         }
+
         public async Task<string> GetUserToken(User user)
         {
             var secret = _configuration["JWT_SECRET"];
+
             if (string.IsNullOrEmpty(secret))
-            {
                 throw new Exception("JWT Secret is missing");
-            }
-            var key = Encoding.ASCII.GetBytes(secret);
+
+            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret));
+
+            var claims = new[]
+            {
+                new Claim("id", user.Id.ToString()),
+                new Claim("username", user.Username),
+                new Claim("role", user.UserRole.ToString())
+            };
+
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new System.Security.Claims.ClaimsIdentity(new[]
-                {
-                   new Claim("id", user.Id.ToString()),
-                   new Claim("username", user.Username),
-                   new Claim("role", user.UserRole.ToString())
-                }),
+                Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddHours(5),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = credentials
             };
+
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            var encodedToken = tokenHandler.WriteToken(token);
-            return encodedToken;
+
+            return tokenHandler.WriteToken(token);
         }
+
         public async Task RegisterUser(RegisterUserModel request)
         {
-            if (await _userRepository.GetUserByEmail(request.Email) != null || await _userRepository.GetUserByUsername(request.Username) != null)
+            if (await _userRepository.GetUserByEmail(request.Email) != null ||
+                await _userRepository.GetUserByUsername(request.Username) != null)
             {
-                throw new Exception("User with this email already exists");
+                throw new Exception("User already exists");
             }
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
             User user = new User
             {
                 Username = request.Username,
@@ -61,23 +71,21 @@ namespace RestaurantManagementSystem.Services
                 HashedPassword = passwordHash,
                 UserRole = Role.client
             };
+
             await _userRepository.AddUser(user);
         }
 
         public async Task<string> LogInUser(LogInModel request)
         {
             var user = await _userRepository.GetUserByUsernameOrEmail(request.UsernameOrEmail);
+
             if (user == null)
-            {
-                throw new ArgumentNullException("User not found");
-            }
-            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(request.Password, user.HashedPassword);
-            if (!isPasswordValid)
-            {
+                throw new Exception("User not found");
+
+            if (!BCrypt.Net.BCrypt.Verify(request.Password, user.HashedPassword))
                 throw new Exception("Invalid password");
-            }
-            string userToken = await GetUserToken(user);
-            return userToken;
+
+            return await GetUserToken(user);
         }
     }
 }

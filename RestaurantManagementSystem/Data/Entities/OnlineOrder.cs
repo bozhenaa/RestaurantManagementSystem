@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
-        public string CustomerName { get; set; }
+        public string? CustomerName { get; set; }
         public string DeliveryAddress { get; set; }
         public string CustomerPhone { get; set; }
         public DateTime OrderDate { get; set; }
