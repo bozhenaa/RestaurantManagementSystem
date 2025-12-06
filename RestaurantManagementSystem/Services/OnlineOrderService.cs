@@ -40,8 +40,8 @@ namespace RestaurantManagementSystem.Services
                     MenuItemId = item.MenuItemId,
                     Quantity = item.Quantity,
                     PriceAtTimeOfOrder = price
-                };
-                orderItemsList.Add(orderItemEntity);
+                });
+                //orderItemsList.Add(orderItemEntity);
                 
             }
 
