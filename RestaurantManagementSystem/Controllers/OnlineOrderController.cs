@@ -46,7 +46,7 @@ namespace RestaurantManagementSystem.Controllers
                 }
                 int userIdValue = int.Parse(userId.Value);
                 await _onlineOrderService.CreateOrder(userIdValue, onlineOrder);
-                return Ok($"Your order will arive in aprox. 45 minutes");
+                return Ok($"Thank you, {onlineOrder.CustomerName} for your order. \n Your order will arive in aprox. 45 minutes");
             }
             catch (Exception ex)
             {

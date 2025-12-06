@@ -5,6 +5,9 @@ namespace RestaurantManagementSystem.Models
     public class CreateOnlineOrderModel
     {
         [Required]
+        public string CustomerName { get; set; }
+
+        [Required]
         public string DeliveryAddress { get; set; }
 
         [Required]

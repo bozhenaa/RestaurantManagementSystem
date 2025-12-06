@@ -34,6 +34,7 @@ namespace RestaurantManagementSystem.Services
             var newOrder = new OnlineOrder
             {
                 UserId = userId,
+                CustomerName = order.CustomerName,
                 CustomerPhone = order.PhoneNumber,
                 DeliveryAddress = order.DeliveryAddress,
                 OrderDate = DateTime.UtcNow,
