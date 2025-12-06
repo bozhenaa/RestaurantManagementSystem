@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantManagementSystem.Data.Entities;
@@ -45,7 +46,7 @@ namespace RestaurantManagementSystem.Controllers
                 }
                 int userIdValue = int.Parse(userId.Value);
                 await _onlineOrderService.CreateOrder(userIdValue, onlineOrder);
-                return Ok();
+                return Ok($"Thank you, {onlineOrder.CustomerName} for your order. \n Your order will arive in aprox. 45 minutes");
             }
             catch (Exception ex)
             {
@@ -105,6 +106,41 @@ namespace RestaurantManagementSystem.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("{id}/cancel")]
+        [Authorize(Roles = "admin, employee, user")]
+        public async Task<IActionResult> CancelOrder(int id)
+        {
+            try
+            {
+                await _onlineOrderService.CancelOrder(id);
+                return Ok();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest("Order cannot be cancelled");
+            }
+        }
+
+        
+        [HttpPut("{orderId}/for-delivery")]
+        [Authorize(Roles = "admin, employee")]
+        public async Task<IActionResult> OutForDelivery(int orderId)
+        {
+            try
+            {
+                await _onlineOrderService.OutForDelivery(orderId);
+                return Ok();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest();
             }
         }
     }

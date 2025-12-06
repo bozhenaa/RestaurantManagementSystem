@@ -40,12 +40,15 @@ namespace RestaurantManagementSystem.Services
                     MenuItemId = item.MenuItemId,
                     Quantity = item.Quantity,
                     PriceAtTimeOfOrder = price
-                });
+                };
+                orderItemsList.Add(orderItemEntity);
+                
             }
 
             var newOrder = new OnlineOrder
             {
                 UserId = userId,
+                CustomerName = order.CustomerName,
                 CustomerPhone = order.PhoneNumber,
                 DeliveryAddress = order.DeliveryAddress,
                 OrderDate = DateTime.UtcNow,
@@ -119,6 +122,38 @@ namespace RestaurantManagementSystem.Services
                     await _ingredientRepository.Update(ingredient);
                 }
             }
+        }
+
+        public async Task<OnlineOrderStatus> GetOrderStatusByOrderId(int id)
+        {
+            var onlineOrder = await GetOrderById(id);
+            if (onlineOrder == null)
+            {
+                throw new KeyNotFoundException();
+            }
+            return onlineOrder.Status;
+        }
+
+        public async Task CancelOrder(int orderId)
+        {
+            var currentState = await GetOrderStatusByOrderId(orderId);
+            if(currentState == OnlineOrderStatus.Pending)
+            {
+                var order = await GetOrderById(orderId);
+                order.Status = OnlineOrderStatus.Cancelled;
+                await _orderRepository.UpdateOrder(order);
+            }
+            else
+            {
+                throw new InvalidOperationException("Only pending orders can be cancelled.");
+            }
+        }
+
+        public async Task OutForDelivery(int orderId)
+        {
+            var order = await GetOrderById(orderId);
+            order.Status = OnlineOrderStatus.OutForDelivery;
+            await _orderRepository.UpdateOrder(order);
         }
     }
 }
