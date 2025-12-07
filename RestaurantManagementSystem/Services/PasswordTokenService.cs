@@ -3,13 +3,13 @@ using RestaurantManagementSystem.Repositories.IRepositories;
 using RestaurantManagementSystem.Services.IServices;
 namespace RestaurantManagementSystem.Services
 {
-    public class PasswordTokenServices :IPasswordTokenService
+    public class PasswordTokenService :IPasswordTokenService
     {
         public IPasswordTokenRepository _tokenRepository;
         public IUserRepository _userRepository;
         public IConfiguration _configuration;
 
-        public PasswordTokenServices(IPasswordTokenRepository tokenRepository, IUserRepository userRepository, IConfiguration configuration)
+        public PasswordTokenService(IPasswordTokenRepository tokenRepository, IUserRepository userRepository, IConfiguration configuration)
         {
             _tokenRepository = tokenRepository;
             _userRepository = userRepository;
