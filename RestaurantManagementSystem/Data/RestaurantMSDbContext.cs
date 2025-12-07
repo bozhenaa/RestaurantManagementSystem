@@ -18,7 +18,6 @@ namespace RestaurantManagementSystem.Data
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<MenuItemIngredient> MenuItemIngredients { get; set; }
 
-        public DbSet<Menu>Menus { get; set; }
         public DbSet<OnlineOrder> OnlineOrders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
@@ -46,7 +45,7 @@ namespace RestaurantManagementSystem.Data
                 .WithMany(i => i.MenuItemIngredients)
                 .HasForeignKey(mii => mii.IngredientId)
                 .OnDelete(DeleteBehavior.Restrict);
-        }
+        
             modelBuilder.Entity<ReservedTables>()
                 .HasOne(rt => rt.Reservation)
                 .WithMany(r => r.ReservedTables)

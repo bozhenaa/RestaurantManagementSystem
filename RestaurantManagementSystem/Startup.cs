@@ -115,11 +115,13 @@ namespace RestaurantManagementSystem
     .AddJsonOptions(x =>
         x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 
+            services.AddScoped<IIngredientRepository, IngredientRepository>();
             services.AddScoped<IMenuItemRepository, MenuItemRepository>();
             services.AddScoped<IMenuRepository, MenuRepository>();
             services.AddScoped<IOnlineOrderRepository, OnlineOrderRepository>();
             services.AddScoped<IPasswordTokenRepository, PasswordTokenRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
+            services.AddScoped<IReservedTablesRepository, ReservedTablesRepository>();
             services.AddScoped<IRestaurantTableRepository, RestaurantTableRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
@@ -131,7 +133,7 @@ namespace RestaurantManagementSystem
             services.AddScoped<IPasswordTokenService, PasswordTokenService>();
             services.AddScoped<IReservationService, ReservationService>();
             services.AddScoped<IReservedTablesService, ReservedTablesService>();
-            services.AddScoped<IRestaurantTableService, IRestaurantTableService>();
+            services.AddScoped<IRestaurantTableService, RestaurantTableService>();
             services.AddScoped<IUserService, UserService>();
         }
 
