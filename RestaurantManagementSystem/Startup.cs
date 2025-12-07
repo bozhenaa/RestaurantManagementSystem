@@ -109,20 +109,23 @@ namespace RestaurantManagementSystem
     .AddJsonOptions(x =>
         x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IPasswordTokenRepository, PasswordTokenRepository>();
             services.AddScoped<IMenuItemRepository, MenuItemRepository>();
-            services.AddScoped<IMenuItemService, MenuItemService>();
             services.AddScoped<IMenuRepository, MenuRepository>();
-            services.AddScoped<IMenuService, MenuService>();
-            services.AddScoped<IMenuItemRepository, MenuItemRepository>();
-            services.AddScoped<IMenuItemService, MenuItemService>();
             services.AddScoped<IOnlineOrderRepository, OnlineOrderRepository>();
+            services.AddScoped<IPasswordTokenRepository, PasswordTokenRepository>();
+            services.AddScoped<IReservationRepository, ReservationRepository>();
+            services.AddScoped<IRestaurantTableRepository, RestaurantTableRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IMenuItemService, MenuItemService>();
+            services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IOnlineOrderService, OnlineOrderService>();
-
-
-
-
+            services.AddScoped<IPasswordTokenService, PasswordTokenService>();
+            services.AddScoped<IReservationService, ReservationService>();
+            services.AddScoped<IReservedTablesService, ReservedTablesService>();
+            services.AddScoped<IRestaurantTableService, IRestaurantTableService>();
+            services.AddScoped<IUserService, UserService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
