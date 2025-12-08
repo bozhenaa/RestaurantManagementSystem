@@ -49,5 +49,10 @@ namespace RestaurantManagementSystem.Repositories
                     .ThenInclude(link => link.Ingredient)  
                 .FirstOrDefaultAsync(mi => mi.Id == id);
         }
+
+        public async Task<MenuItem?> GetById(int id)
+        {
+            return await _context.MenuItems.FirstOrDefaultAsync(m => m.Id == id);
+        }
     }
 }

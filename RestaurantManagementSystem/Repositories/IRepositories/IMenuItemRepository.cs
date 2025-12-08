@@ -9,8 +9,9 @@ namespace RestaurantManagementSystem.Repositories.IRepositories
         Task AddMenuItem(MenuItem menuItem);
         Task RemoveMenuItem(MenuItem menuItem);
         Task UpdateMenuItem(MenuItem menuItem);
+        Task<MenuItem?> GetById(int id);
 
-        
+
         Task<MenuItem?> GetMenuItemWithIngredients(int id);
     }
 }

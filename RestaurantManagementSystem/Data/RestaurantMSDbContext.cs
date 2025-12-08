@@ -22,6 +22,8 @@ namespace RestaurantManagementSystem.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservedTables> ReservedTables { get; set; }
+        public DbSet<Bill> Bills { get; set; }
+        public DbSet<BillItem> BillItems { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
