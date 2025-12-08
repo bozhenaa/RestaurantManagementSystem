@@ -1,19 +1,23 @@
-﻿using RestaurantManagementSystem.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using RestaurantManagementSystem.Data.Entities;
+using RestaurantManagementSystem.Enums;
 using RestaurantManagementSystem.Repositories.IRepositories;
 using RestaurantManagementSystem.Services.IServices;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 
 namespace RestaurantManagementSystem.Services
 {
-    public class ReservedTablesService :IReservedTablesService
+    public class ReservedTablesService : IReservedTablesService
     {
         private readonly IReservedTablesRepository _reservedTablesRepository;
         private readonly IRestaurantTableRepository _restaurantTableRepository;
-        public ReservedTablesService(IReservedTablesRepository reservedTablesRepository, IRestaurantTableRepository restaurantTableRepository)
+        private readonly IReservationRepository _reservationRepository;
+        public ReservedTablesService(IReservedTablesRepository reservedTablesRepository, 
+            IRestaurantTableRepository restaurantTableRepository, IReservationRepository reservationRepository)
         {
             _reservedTablesRepository = reservedTablesRepository;
             _restaurantTableRepository = restaurantTableRepository;
+            _reservationRepository = reservationRepository;
         }
 
         public async Task<IEnumerable<RestaurantTable>> GetAllFreeTables(DateOnly date, TimeOnly time)
@@ -34,6 +38,14 @@ namespace RestaurantManagementSystem.Services
             return freeTables;
         }
 
+        public async Task<bool> IsTableAvailable(RestaurantTable table, DateOnly desiredDate, TimeOnly desiredTime)
+        {
+            bool available = false;
+            var allReservations = await _reservationRepository.GetAllReservationsByDate(desiredDate);
+            var notAvailable = allReservations.Where(r=> OverlapingReservations(r.ReservationTime, desiredTime)).ToList();
+            bool isBusy = notAvailable.Any(t => t.ReservedTables.Any(t=>t.RestaurantTableId == table.Id));    
+            return !isBusy;
+        }
         public bool OverlapingReservations(TimeOnly resTime, TimeOnly desiredTime)
         {
             TimeOnly startTime = desiredTime.AddHours(-3);
@@ -47,5 +59,51 @@ namespace RestaurantManagementSystem.Services
                 return resTime >= startTime || resTime <= endTime;
             }
         }
+
+        public async Task<IEnumerable<RestaurantTable>> TableSuggestions(RoomName roomName, int seats, DateOnly date, TimeOnly time)
+        {
+            var freeTables = await GetAllFreeTables(date, time);
+
+            var roomFreeTables = freeTables.Where(t=>t.RoomName == roomName).ToList();
+
+            var match = roomFreeTables
+            .Where(t => t.Seats >= seats)
+            .OrderBy(t => t.Seats)
+            .FirstOrDefault();
+            if (match != null)
+            {
+                return new List<RestaurantTable> { match };
+            }
+            var selectedTables = new List<RestaurantTable>();
+            int currentSeats = 0;
+            var sortedTables = freeTables.OrderByDescending(t => t.Seats);
+
+            foreach (var table in sortedTables)
+            {
+                selectedTables.Add(table);
+                currentSeats += table.Seats;
+                if (currentSeats >= seats)
+                {
+                    return selectedTables;
+
+                }
+            }
+            return Enumerable.Empty<RestaurantTable>();
+        }
+
+        public async Task<IEnumerable<RestaurantTable>> GetFreeTablesFromList(IEnumerable<RestaurantTable> tables,
+            DateOnly date, TimeOnly time)
+        {
+            var busyTables = await _reservedTablesRepository.GetReservedTablesByDate(date);
+            var busyTablesHours = busyTables
+                .Where(rt=> OverlapingReservations(rt.Reservation.ReservationTime, time))
+                .Select(rt => rt.RestaurantTableId)
+                .Distinct()
+                .ToList();
+
+            var freeTables = tables
+                .Where(t => !busyTablesHours.Contains(t.Id)).ToList();
+            return freeTables;
+         }
     }
 }

@@ -9,5 +9,6 @@ namespace RestaurantManagementSystem.Services.IServices
         Task<Reservation> GetReservation (int reservationId);
         Task<IEnumerable<Reservation>> GetAll ();
         Task<IEnumerable<Reservation>> GetAllReservationsByDate (DateOnly date);
+
     }
 }

@@ -229,6 +229,51 @@ namespace RestaurantManagementSystem.Migrations
                     b.ToTable("PasswordTokens");
                 });
 
+            modelBuilder.Entity("RestaurantManagementSystem.Data.Entities.Reservation", b =>
+                {
+                    b.Property<int>("ReservationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReservationId"));
+
+                    b.Property<int>("GuestNumber")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("ReservationDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("ReservationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeOnly>("ReservationTime")
+                        .HasColumnType("time");
+
+                    b.Property<string>("ReservationType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ReservationId");
+
+                    b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("RestaurantManagementSystem.Data.Entities.ReservedTables", b =>
+                {
+                    b.Property<int>("ReservationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RestaurantTableId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReservationId", "RestaurantTableId");
+
+                    b.HasIndex("RestaurantTableId");
+
+                    b.ToTable("ReservedTables");
+                });
+
             modelBuilder.Entity("RestaurantManagementSystem.Data.Entities.RestaurantTable", b =>
                 {
                     b.Property<int>("Id")
@@ -362,6 +407,25 @@ namespace RestaurantManagementSystem.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("RestaurantManagementSystem.Data.Entities.ReservedTables", b =>
+                {
+                    b.HasOne("RestaurantManagementSystem.Data.Entities.Reservation", "Reservation")
+                        .WithMany("ReservedTables")
+                        .HasForeignKey("ReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RestaurantManagementSystem.Data.Entities.RestaurantTable", "RestaurantTable")
+                        .WithMany()
+                        .HasForeignKey("RestaurantTableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Reservation");
+
+                    b.Navigation("RestaurantTable");
+                });
+
             modelBuilder.Entity("RestaurantManagementSystem.Data.Entities.Ingredient", b =>
                 {
                     b.Navigation("MenuItemIngredients");
@@ -375,6 +439,11 @@ namespace RestaurantManagementSystem.Migrations
             modelBuilder.Entity("RestaurantManagementSystem.Data.Entities.OnlineOrder", b =>
                 {
                     b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("RestaurantManagementSystem.Data.Entities.Reservation", b =>
+                {
+                    b.Navigation("ReservedTables");
                 });
 #pragma warning restore 612, 618
         }
