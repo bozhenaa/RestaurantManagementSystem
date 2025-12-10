@@ -22,15 +22,15 @@ namespace RestaurantManagementSystem.Services
         public async Task<Bill> CreateAsync(Bill bill)
         {
             bill.DateTime = DateTime.UtcNow;
-            return await _billRepo.Create(bill);
+            return await _billRepo.CreateBill(bill);
         }
 
-        public Task<bool> UpdateAsync(Bill bill) => _billRepo.Update(bill);
-        public Task<bool> DeleteAsync(int id) => _billRepo.Delete(id);
+        public Task<bool> UpdateAsync(Bill bill) => _billRepo.UpdateBill(bill);
+        public Task<bool> DeleteAsync(int id) => _billRepo.DeleteBill(id);
 
         public async Task<bool> AddMenuItemAsync(int billId, int menuItemId, int quantity)
         {
-            var bill = await _billRepo.GetById(billId);
+            var bill = await _billRepo.GetBillById(billId);
             if (bill == null)
                 return false;
 
@@ -49,7 +49,7 @@ namespace RestaurantManagementSystem.Services
             };
 
             bill.Amount += price * quantity;
-            await _billRepo.Update(bill);
+            await _billRepo.UpdateBill(bill);
 
             return await _billRepo.AddBillItem(item);
         }

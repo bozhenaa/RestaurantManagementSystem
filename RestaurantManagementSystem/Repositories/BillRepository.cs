@@ -19,7 +19,7 @@ namespace RestaurantManagementSystem.Repositories
             return await _context.Bills.ToListAsync();
         }
 
-        public async Task<Bill?> GetById(int id)
+        public async Task<Bill?> GetBillById(int id)
         {
             return await _context.Bills.FindAsync(id);
         }
@@ -32,20 +32,20 @@ namespace RestaurantManagementSystem.Repositories
                 .FirstOrDefaultAsync(b => b.Id == id);
         }
 
-        public async Task<Bill> Create(Bill bill)
+        public async Task<Bill> CreateBill(Bill bill)
         {
             _context.Bills.Add(bill);
             await _context.SaveChangesAsync();
             return bill;
         }
 
-        public async Task<bool> Update(Bill bill)
+        public async Task<bool> UpdateBill(Bill bill)
         {
             _context.Bills.Update(bill);
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> DeleteBill(int id)
         {
             var bill = await _context.Bills.FindAsync(id);
             if (bill == null)
