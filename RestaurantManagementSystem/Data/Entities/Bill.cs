@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RestaurantManagementSystem.Enums;
 
 namespace RestaurantManagementSystem.Data.Entities
 {
@@ -10,7 +11,7 @@ namespace RestaurantManagementSystem.Data.Entities
         public int UserId { get; set; }
         public decimal Amount { get; set; }
         public DateTime DateTime { get; set; }
-        public string State { get; set; }
+        public BillState State { get; set; }
 
         public ICollection<BillItem> BillItems { get; set; }
     }
