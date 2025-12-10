@@ -12,5 +12,6 @@ namespace RestaurantManagementSystem.Data.Entities
         public string Phone { get; set; }
         public string HashedPassword { get; set; }
         public Role UserRole { get; set; }
+        public Employee? Employee { get; set; }
     }
 }

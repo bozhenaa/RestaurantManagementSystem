@@ -22,6 +22,8 @@ namespace RestaurantManagementSystem.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservedTables> ReservedTables { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
@@ -55,6 +57,11 @@ namespace RestaurantManagementSystem.Data
                 .HasOne(rt => rt.RestaurantTable)
                 .WithMany() 
                 .HasForeignKey(rt => rt.RestaurantTableId);
+
+           modelBuilder.Entity<User>()
+                .HasOne(u=> u.Employee)
+                .WithOne(e => e.User)
+                .HasForeignKey<Employee>(e => e.EmployeeId);
         }
     }
 }

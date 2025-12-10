@@ -60,7 +60,7 @@ namespace RestaurantManagementSystem.Services
             }
         }
 
-        public async Task<IEnumerable<RestaurantTable>> TableSuggestions(RoomName roomName, int seats, DateOnly date, TimeOnly time)
+        public async Task<IEnumerable<RestaurantTable>> GetTableSuggestions(RoomName roomName, int seats, DateOnly date, TimeOnly time)
         {
             var freeTables = await GetAllFreeTables(date, time);
 
@@ -104,6 +104,6 @@ namespace RestaurantManagementSystem.Services
             var freeTables = tables
                 .Where(t => !busyTablesHours.Contains(t.Id)).ToList();
             return freeTables;
-         }
+        }
     }
 }
