@@ -1,5 +1,6 @@
 ﻿using RestaurantManagementSystem.Data;
 using RestaurantManagementSystem.Data.Entities;
+using RestaurantManagementSystem.Repositories;
 using RestaurantManagementSystem.Repositories.IRepositories;
 using RestaurantManagementSystem.Services.IServices;
 
@@ -16,19 +17,19 @@ namespace RestaurantManagementSystem.Services
             _menuRepo = menuRepo;
         }
 
-        public Task<IEnumerable<Bill>> GetAllAsync() => _billRepo.GetAll();
-        public Task<Bill?> GetByIdAsync(int id) => _billRepo.GetBillWithItems(id);
+        public Task<IEnumerable<Bill>> GetAllBill() => _billRepo.GetAll();
+        public Task<Bill?> GetBillById(int id) => _billRepo.GetBillWithItems(id);
 
-        public async Task<Bill> CreateAsync(Bill bill)
+        public async Task<Bill> CreateBill(Bill bill)
         {
             bill.DateTime = DateTime.UtcNow;
             return await _billRepo.CreateBill(bill);
         }
 
-        public Task<bool> UpdateAsync(Bill bill) => _billRepo.UpdateBill(bill);
-        public Task<bool> DeleteAsync(int id) => _billRepo.DeleteBill(id);
+        public Task<bool> UpdateBill(Bill bill) => _billRepo.UpdateBill(bill);
+        public Task<bool> DeleteBill(int id) => _billRepo.DeleteBill(id);
 
-        public async Task<bool> AddMenuItemAsync(int billId, int menuItemId, int quantity)
+        public async Task<bool> AddMenuItem(int billId, int menuItemId, int quantity)
         {
             var bill = await _billRepo.GetBillById(billId);
             if (bill == null)
@@ -52,6 +53,10 @@ namespace RestaurantManagementSystem.Services
             await _billRepo.UpdateBill(bill);
 
             return await _billRepo.AddBillItem(item);
+        }
+        public Task<decimal> GetTotalPayments(DateTime start, DateTime end)
+        {
+            return _billRepo.GetTotalPayments(start, end);
         }
     }
 }

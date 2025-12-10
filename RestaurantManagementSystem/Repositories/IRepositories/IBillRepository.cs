@@ -12,5 +12,6 @@ namespace RestaurantManagementSystem.Repositories.IRepositories
 
         Task<bool> AddBillItem(BillItem item);
         Task<Bill?> GetBillWithItems(int id);
+        Task<decimal> GetTotalPayments(DateTime start, DateTime end);
     }
 }

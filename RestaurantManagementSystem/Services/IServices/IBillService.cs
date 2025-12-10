@@ -4,11 +4,12 @@ namespace RestaurantManagementSystem.Services.IServices
 {
     public interface IBillService
     {
-        Task<IEnumerable<Bill>> GetAllAsync();
-        Task<Bill?> GetByIdAsync(int id);
-        Task<Bill> CreateAsync(Bill bill);
-        Task<bool> UpdateAsync(Bill bill);
-        Task<bool> DeleteAsync(int id);
-        Task<bool> AddMenuItemAsync(int billId, int menuItemId, int quantity);
+        Task<IEnumerable<Bill>> GetAllBill();
+        Task<Bill?> GetBillById(int id);
+        Task<Bill> CreateBill(Bill bill);
+        Task<bool> UpdateBill(Bill bill);
+        Task<bool> DeleteBill(int id);
+        Task<bool> AddMenuItem(int billId, int menuItemId, int quantity);
+        Task<decimal> GetTotalPayments(DateTime start, DateTime end);
     }
 }

@@ -60,5 +60,11 @@ namespace RestaurantManagementSystem.Repositories
             _context.BillItems.Add(item);
             return await _context.SaveChangesAsync() > 0;
         }
+        public async Task<decimal> GetTotalPayments(DateTime start, DateTime end)
+        {
+            return await _context.Bills
+                .Where(b => b.DateTime >= start && b.DateTime <= end)
+                .SumAsync(b => b.Amount);
+        }
     }
 }
